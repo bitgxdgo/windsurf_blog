@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1 class="trending-title">Trending</h1>
+
+<div class="featured-post mb-5">
+    {% if posts and posts|length > 0 %}
+    {% set featured = posts[0] %}
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <img src="{{ featured.image_url }}" alt="{{ featured.title }}" class="img-fluid rounded featured-image">
+        </div>
+        <div class="col-md-6">
+            <div class="category-date">
+                <span class="category">{{ featured.category }}</span>
+                <span class="date">— {{ featured.created_at.strftime('%B %d, %Y') }}</span>
+            </div>
+            <h2 class="featured-title">{{ featured.title }}</h2>
+            <p class="featured-excerpt">{{ featured.content[:200] }}...</p>
+            <div class="author-info">
+                <img src="https://ui-avatars.com/api/?name={{ featured.author_name }}" alt="{{ featured.author_name }}" class="author-avatar">
+                <div class="author-details">
+                    <h5>{{ featured.author_name }}</h5>
+                    <p>{{ featured.author_title }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="row">
+    {% for post in posts[1:] %}
+    <div class="col-md-4 mb-4">
+        <article class="post-card">
+            <img src="{{ post.image_url }}" alt="{{ post.title }}" class="card-img-top">
+            <div class="card-body">
+                <div class="category-date">
+                    <span class="category">{{ post.category }}</span>
+                    <span class="date">— {{ post.created_at.strftime('%B %d, %Y') }}</span>
+                </div>
+                <h3 class="card-title">{{ post.title }}</h3>
+                <p class="card-text">{{ post.content[:100] }}...</p>
+                <div class="author-info">
+                    <img src="https://ui-avatars.com/api/?name={{ post.author_name }}" alt="{{ post.author_name }}" class="author-avatar">
+                    <div class="author-details">
+                        <h5>{{ post.author_name }}</h5>
+                        <p>{{ post.author_title }}</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
